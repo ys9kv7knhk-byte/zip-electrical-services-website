@@ -456,6 +456,65 @@
 
   .work-body p { color: var(--slate); font-size: 0.92rem; }
 
+  /* Testimonials */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+  }
+
+  .testimonial-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px 26px;
+    margin: 0;
+  }
+
+  .testimonial-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--ink);
+    margin: 0 0 20px 0;
+  }
+
+  .testimonial-author {
+    background: none;
+    color: var(--ink);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .testimonial-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 8px 14px;
+    border-radius: 4px;
+  }
+
+  .testimonial-name {
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .testimonial-location {
+    font-size: 0.78rem;
+    color: #A7ADB6;
+  }
+
+  .testimonial-stars {
+    color: var(--amber);
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+  }
+
   /* Area */
   .area {
     display: grid;
@@ -531,6 +590,63 @@
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
   @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+  .file-upload {
+    position: relative;
+  }
+
+  .file-upload input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border: 1px dashed var(--line);
+    background: var(--cream);
+    padding: 16px 14px;
+    border-radius: 3px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    color: var(--slate);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .file-upload-label svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--slate);
+    transition: color 0.15s ease;
+  }
+
+  .file-upload:hover .file-upload-label,
+  .file-upload input[type="file"]:focus ~ .file-upload-label {
+    border-color: var(--amber);
+    color: var(--ink);
+  }
+
+  .file-upload:hover .file-upload-label svg,
+  .file-upload input[type="file"]:focus ~ .file-upload-label svg {
+    color: var(--ink);
+  }
+
+  .file-upload-list {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
   button[type="submit"] {
     background: var(--ink);
@@ -729,6 +845,37 @@
   </div>
 </section>
 
+<section class="testimonials" id="testimonials" style="background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:28px;">
+      <span class="mono">TESTIMONIALS</span>
+      <h2>What customers are saying</h2>
+    </div>
+    <div class="testimonials-grid">
+      <blockquote class="testimonial-card">
+        <p class="testimonial-text">&ldquo;Josh installed downlights in my kitchen exactly where I need them for food prep and cooking. He put the lights on a dimmer which is super convenient. I'm happy to recommend Zip Electrical Services. Josh is organised, friendly and cleaned up after the job. Thanks!&rdquo;</p>
+        <footer class="testimonial-author">
+          <div class="testimonial-badge">
+            <span class="testimonial-name">Carolyn Burn</span>
+            <span class="testimonial-location">Hastings</span>
+            <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </footer>
+      </blockquote>
+      <blockquote class="testimonial-card">
+        <p class="testimonial-text">&ldquo;Josh has done several bits of work at our house over this year including putting in some powerpoints, upgrading the lights in the kitchen, and other assorted jobs that come and. He is a delight - always on time, fast, diligent, safe, and I think very fairly priced for the quality of work he delivers. Lovely guy, always up for a chat (but doesn't mind getting in and getting the job done if you're not in a talking mood). Couldn't recommend him more for any of your electrical needs.&rdquo;</p>
+        <footer class="testimonial-author">
+          <div class="testimonial-badge">
+            <span class="testimonial-name">Tallulah Stone</span>
+            <span class="testimonial-location">Yarraville</span>
+            <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
 <section id="area" style="background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap area">
     <div>
@@ -782,104 +929,9 @@
       ]
     });
 
-    // Outline of the whole Mornington Peninsula, traced from the actual coast road
     var serviceArea = new google.maps.Polygon({
       paths: [
-        {lat: -38.1381039, lng: 145.1220731},
-        {lat: -38.1793691, lng: 145.1858104},
-        {lat: -38.2242922, lng: 145.236354},
-        {lat: -38.2614546, lng: 145.2427779},
-        {lat: -38.2885986, lng: 145.2213712},
-        {lat: -38.2997388, lng: 145.2260892},
-        {lat: -38.3085412, lng: 145.2171494},
-        {lat: -38.3038707, lng: 145.2053825},
-        {lat: -38.2995326, lng: 145.1973493},
-        {lat: -38.3095556, lng: 145.1959465},
-        {lat: -38.3216143, lng: 145.1982157},
-        {lat: -38.3273609, lng: 145.1961638},
-        {lat: -38.3295004, lng: 145.198223},
-        {lat: -38.3375304, lng: 145.2051465},
-        {lat: -38.3421903, lng: 145.2162602},
-        {lat: -38.3549702, lng: 145.2146214},
-        {lat: -38.3708996, lng: 145.2180216},
-        {lat: -38.376615, lng: 145.222922},
-        {lat: -38.3742346, lng: 145.2071721},
-        {lat: -38.3666558, lng: 145.2003432},
-        {lat: -38.37099, lng: 145.1905263},
-        {lat: -38.3750547, lng: 145.1963816},
-        {lat: -38.3827777, lng: 145.214854},
-        {lat: -38.399905, lng: 145.2296356},
-        {lat: -38.4070621, lng: 145.2351154},
-        {lat: -38.4076233, lng: 145.2159403},
-        {lat: -38.3938972, lng: 145.155891},
-        {lat: -38.3939266, lng: 145.1235462},
-        {lat: -38.4030118, lng: 145.1106957},
-        {lat: -38.4105573, lng: 145.0858799},
-        {lat: -38.4203339, lng: 145.0761623},
-        {lat: -38.4241789, lng: 145.0781009},
-        {lat: -38.4247851, lng: 145.0706839},
-        {lat: -38.4277684, lng: 145.0589271},
-        {lat: -38.4298601, lng: 145.0522584},
-        {lat: -38.4342283, lng: 145.0499826},
-        {lat: -38.4390857, lng: 145.0451399},
-        {lat: -38.4477167, lng: 145.0394107},
-        {lat: -38.4565294, lng: 145.0319716},
-        {lat: -38.4647394, lng: 145.0320587},
-        {lat: -38.4754262, lng: 145.0249804},
-        {lat: -38.4820058, lng: 145.029516},
-        {lat: -38.4872862, lng: 145.0298151},
-        {lat: -38.4834251, lng: 145.0181193},
-        {lat: -38.4807155, lng: 145.0068326},
-        {lat: -38.4843017, lng: 144.9880316},
-        {lat: -38.4869796, lng: 144.9691341},
-        {lat: -38.4889794, lng: 144.9476912},
-        {lat: -38.4959712, lng: 144.9352431},
-        {lat: -38.4896565, lng: 144.9130156},
-        {lat: -38.4994223, lng: 144.8876365},
-        {lat: -38.4786683, lng: 144.8867581},
-        {lat: -38.4463912, lng: 144.8577326},
-        {lat: -38.4202288, lng: 144.8238992},
-        {lat: -38.3842495, lng: 144.7789816},
-        {lat: -38.3591456, lng: 144.7436555},
-        {lat: -38.345749, lng: 144.7248412},
-        {lat: -38.3092738, lng: 144.658777},
-        {lat: -38.3138482, lng: 144.7006101},
-        {lat: -38.3179919, lng: 144.7178125},
-        {lat: -38.3224857, lng: 144.7371552},
-        {lat: -38.3365062, lng: 144.7446372},
-        {lat: -38.3460225, lng: 144.7563598},
-        {lat: -38.3546225, lng: 144.7625034},
-        {lat: -38.363762, lng: 144.7926153},
-        {lat: -38.3702025, lng: 144.8195943},
-        {lat: -38.3716976, lng: 144.8285957},
-        {lat: -38.3615433, lng: 144.8813669},
-        {lat: -38.3496721, lng: 144.9233327},
-        {lat: -38.333303, lng: 144.9636289},
-        {lat: -38.3120182, lng: 144.9930715},
-        {lat: -38.3006821, lng: 144.9902136},
-        {lat: -38.2898799, lng: 144.9890294},
-        {lat: -38.272039, lng: 145.0015178},
-        {lat: -38.2526689, lng: 145.0268298},
-        {lat: -38.2275005, lng: 145.0259755},
-        {lat: -38.2198779, lng: 145.0323658},
-        {lat: -38.2151648, lng: 145.0370745},
-        {lat: -38.2141343, lng: 145.0448971},
-        {lat: -38.2019766, lng: 145.0625434},
-        {lat: -38.1799344, lng: 145.0739615},
-        {lat: -38.1718429, lng: 145.0813658},
-        {lat: -38.1713554, lng: 145.0817608},
-        {lat: -38.1721068, lng: 145.0822993},
-        {lat: -38.1692919, lng: 145.0852435},
-        {lat: -38.1667131, lng: 145.0866568},
-        {lat: -38.1637708, lng: 145.0884648},
-        {lat: -38.1626181, lng: 145.0913318},
-        {lat: -38.1640406, lng: 145.0953428},
-        {lat: -38.1634629, lng: 145.0967091},
-        {lat: -38.158093, lng: 145.1020279},
-        {lat: -38.1551461, lng: 145.1061225},
-        {lat: -38.153969, lng: 145.108983},
-        {lat: -38.1521331, lng: 145.1126076},
-        {lat: -38.1379377, lng: 145.120056}
+        {lat: -38.1381039, lng: 145.1220731},{lat: -38.1793691, lng: 145.1858104},{lat: -38.2242922, lng: 145.236354},{lat: -38.2614546, lng: 145.2427779},{lat: -38.2885986, lng: 145.2213712},{lat: -38.2997388, lng: 145.2260892},{lat: -38.3085412, lng: 145.2171494},{lat: -38.3038707, lng: 145.2053825},{lat: -38.2995326, lng: 145.1973493},{lat: -38.3095556, lng: 145.1959465},{lat: -38.3216143, lng: 145.1982157},{lat: -38.3273609, lng: 145.1961638},{lat: -38.3295004, lng: 145.198223},{lat: -38.3375304, lng: 145.2051465},{lat: -38.3421903, lng: 145.2162602},{lat: -38.3549702, lng: 145.2146214},{lat: -38.3708996, lng: 145.2180216},{lat: -38.376615, lng: 145.222922},{lat: -38.3742346, lng: 145.2071721},{lat: -38.3666558, lng: 145.2003432},{lat: -38.37099, lng: 145.1905263},{lat: -38.3750547, lng: 145.1963816},{lat: -38.3827777, lng: 145.214854},{lat: -38.399905, lng: 145.2296356},{lat: -38.4070621, lng: 145.2351154},{lat: -38.4076233, lng: 145.2159403},{lat: -38.3938972, lng: 145.155891},{lat: -38.3939266, lng: 145.1235462},{lat: -38.4030118, lng: 145.1106957},{lat: -38.4105573, lng: 145.0858799},{lat: -38.4203339, lng: 145.0761623},{lat: -38.4241789, lng: 145.0781009},{lat: -38.4247851, lng: 145.0706839},{lat: -38.4277684, lng: 145.0589271},{lat: -38.4298601, lng: 145.0522584},{lat: -38.4342283, lng: 145.0499826},{lat: -38.4390857, lng: 145.0451399},{lat: -38.4477167, lng: 145.0394107},{lat: -38.4565294, lng: 145.0319716},{lat: -38.4647394, lng: 145.0320587},{lat: -38.4754262, lng: 145.0249804},{lat: -38.4820058, lng: 145.029516},{lat: -38.4872862, lng: 145.0298151},{lat: -38.4834251, lng: 145.0181193},{lat: -38.4807155, lng: 145.0068326},{lat: -38.4843017, lng: 144.9880316},{lat: -38.4869796, lng: 144.9691341},{lat: -38.4889794, lng: 144.9476912},{lat: -38.4959712, lng: 144.9352431},{lat: -38.4896565, lng: 144.9130156},{lat: -38.4994223, lng: 144.8876365},{lat: -38.4786683, lng: 144.8867581},{lat: -38.4463912, lng: 144.8577326},{lat: -38.4202288, lng: 144.8238992},{lat: -38.3842495, lng: 144.7789816},{lat: -38.3591456, lng: 144.7436555},{lat: -38.345749, lng: 144.7248412},{lat: -38.3092738, lng: 144.658777},{lat: -38.3138482, lng: 144.7006101},{lat: -38.3179919, lng: 144.7178125},{lat: -38.3224857, lng: 144.7371552},{lat: -38.3365062, lng: 144.7446372},{lat: -38.3460225, lng: 144.7563598},{lat: -38.3546225, lng: 144.7625034},{lat: -38.363762, lng: 144.7926153},{lat: -38.3702025, lng: 144.8195943},{lat: -38.3716976, lng: 144.8285957},{lat: -38.3615433, lng: 144.8813669},{lat: -38.3496721, lng: 144.9233327},{lat: -38.333303, lng: 144.9636289},{lat: -38.3120182, lng: 144.9930715},{lat: -38.3006821, lng: 144.9902136},{lat: -38.2898799, lng: 144.9890294},{lat: -38.272039, lng: 145.0015178},{lat: -38.2526689, lng: 145.0268298},{lat: -38.2275005, lng: 145.0259755},{lat: -38.2198779, lng: 145.0323658},{lat: -38.2151648, lng: 145.0370745},{lat: -38.2141343, lng: 145.0448971},{lat: -38.2019766, lng: 145.0625434},{lat: -38.1799344, lng: 145.0739615},{lat: -38.1718429, lng: 145.0813658},{lat: -38.1713554, lng: 145.0817608},{lat: -38.1721068, lng: 145.0822993},{lat: -38.1692919, lng: 145.0852435},{lat: -38.1667131, lng: 145.0866568},{lat: -38.1637708, lng: 145.0884648},{lat: -38.1626181, lng: 145.0913318},{lat: -38.1640406, lng: 145.0953428},{lat: -38.1634629, lng: 145.0967091},{lat: -38.158093, lng: 145.1020279},{lat: -38.1551461, lng: 145.1061225},{lat: -38.153969, lng: 145.108983},{lat: -38.1521331, lng: 145.1126076},{lat: -38.1379377, lng: 145.120056}
       ],
       strokeColor: "#F5B400",
       strokeOpacity: 0.9,
@@ -915,7 +967,7 @@
         </div>
       </div>
     </div>
-    <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
+    <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/thank-you.html">
       <input type="hidden" name="form-name" value="quote-request">
       <p style="display:none;">
         <label>Don't fill this out if you're human: <input name="bot-field"></label>
@@ -931,8 +983,8 @@
         </div>
       </div>
       <div class="field">
-        <label for="suburb">Suburb</label>
-        <input id="suburb" name="Suburb" type="text" placeholder="e.g. Dromana">
+        <label for="address">Home address</label>
+        <input id="address" name="Address" type="text" placeholder="e.g. 12 Foreshore Rd, Dromana" autocomplete="street-address">
       </div>
       <div class="field">
         <label for="jobtype">Type of job</label>
@@ -950,10 +1002,44 @@
         <label for="details">Job details</label>
         <textarea id="details" name="Details" placeholder="Tell me a bit about what needs doing"></textarea>
       </div>
+      <div class="field">
+        <label for="photos">Photos (optional)</label>
+        <div class="file-upload">
+          <input id="photos" name="Photos" type="file" accept="image/*" multiple>
+          <label for="photos" class="file-upload-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span class="file-upload-text">Attach photos of the job</span>
+          </label>
+          <div class="file-upload-list" id="photos-list"></div>
+        </div>
+      </div>
       <button type="submit">Send request</button>
     </form>
   </div>
 </section>
+
+<script>
+  (function() {
+    var photosInput = document.getElementById('photos');
+    if (!photosInput) return;
+    var text = document.querySelector('.file-upload-text');
+    var list = document.getElementById('photos-list');
+    photosInput.addEventListener('change', function() {
+      var files = Array.from(photosInput.files || []);
+      list.innerHTML = '';
+      if (files.length) {
+        text.textContent = files.length === 1 ? '1 photo selected' : files.length + ' photos selected';
+        files.forEach(function(f) {
+          var row = document.createElement('div');
+          row.textContent = f.name;
+          list.appendChild(row);
+        });
+      } else {
+        text.textContent = 'Attach photos of the job';
+      }
+    });
+  })();
+</script>
 
 <footer>
   <div class="footer-inner">
