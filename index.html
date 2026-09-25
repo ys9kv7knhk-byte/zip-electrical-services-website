@@ -104,9 +104,12 @@
     --ink-soft: #232B34;
     --cream: #F6F4EF;
     --amber: #F5B400;
+    --amber-dark: #9A7300;
     --slate: #5B6470;
     --line: #E3DFD5;
     --white: #FFFFFF;
+    --danger: #B23B2E;
+    --danger-bg: #FBEAE7;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -570,108 +573,6 @@
     .quote-inner { grid-template-columns: 0.9fr 1.1fr; }
   }
 
-  form { display: flex; flex-direction: column; gap: 16px; }
-
-  .field label {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--slate);
-    margin-bottom: 6px;
-  }
-
-  .field input, .field select, .field textarea {
-    width: 100%;
-    border: 1px solid var(--line);
-    background: var(--cream);
-    padding: 12px 14px;
-    border-radius: 3px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.96rem;
-    color: var(--ink);
-  }
-
-  .field input:focus, .field select:focus, .field textarea:focus {
-    outline: 2px solid var(--amber);
-    outline-offset: 1px;
-  }
-
-  .field textarea { resize: vertical; min-height: 100px; }
-
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
-
-  .file-upload {
-    position: relative;
-  }
-
-  .file-upload input[type="file"] {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  .file-upload-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    border: 1px dashed var(--line);
-    background: var(--cream);
-    padding: 16px 14px;
-    border-radius: 3px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.92rem;
-    color: var(--slate);
-    cursor: pointer;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-
-  .file-upload-label svg {
-    flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-    color: var(--slate);
-    transition: color 0.15s ease;
-  }
-
-  .file-upload:hover .file-upload-label,
-  .file-upload input[type="file"]:focus ~ .file-upload-label {
-    border-color: var(--amber);
-    color: var(--ink);
-  }
-
-  .file-upload:hover .file-upload-label svg,
-  .file-upload input[type="file"]:focus ~ .file-upload-label svg {
-    color: var(--ink);
-  }
-
-  .file-upload-list {
-    margin-top: 8px;
-    font-size: 0.82rem;
-    color: var(--ink);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  button[type="submit"] {
-    background: var(--ink);
-    color: var(--cream);
-    border: none;
-    padding: 15px 24px;
-    border-radius: 3px;
-    font-weight: 600;
-    font-size: 0.98rem;
-    cursor: pointer;
-    margin-top: 6px;
-  }
-
-  button[type="submit"]:hover { background: var(--ink-soft); }
-
   .quote-side .mono { color: var(--slate); display: block; margin-bottom: 14px; }
 
   .quote-side h2 { font-size: 1.9rem; margin-bottom: 16px; }
@@ -687,41 +588,321 @@
     font-size: 0.96rem;
   }
 
-  .contact-row svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--amber-dark, #9A7300); }
+  .contact-row svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--amber-dark); }
 
-  .guided-link {
+  /* Guided quote builder (embedded wizard) */
+  .qb { max-width: 640px; }
+
+  .qb .progress-track {
+    height: 4px;
+    width: 100%;
+    background: var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .qb .progress-fill {
+    height: 100%;
+    background: var(--amber);
+    width: 0%;
+    transition: width 0.25s ease;
+  }
+
+  .qb .qb-step-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--slate);
+    margin-bottom: 28px;
+    min-height: 1em;
+  }
+
+  .qb .card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 30px 26px;
+  }
+
+  .qb .stage-title {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .qb .stage-sub {
+    color: var(--slate);
+    font-size: 0.96rem;
+    line-height: 1.5;
+    margin: 0 0 22px 0;
+  }
+
+  .qb .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .qb .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border: 1px solid var(--line);
+    background: var(--cream);
+    border-radius: 5px;
+    padding: 14px 16px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    font-size: 0.96rem;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+
+  .qb .option:hover { border-color: var(--amber-dark); }
+
+  .qb .option.selected {
+    border-color: var(--amber);
+    background: color-mix(in srgb, var(--amber) 12%, var(--white));
+  }
+
+  .qb .option .indicator {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--slate);
+    margin-top: 1px;
+  }
+
+  .qb .option.radio .indicator { border-radius: 50%; }
+  .qb .option.check .indicator { border-radius: 4px; }
+
+  .qb .option.selected .indicator {
+    border-color: var(--amber);
+    background: var(--amber);
+    position: relative;
+  }
+
+  .qb .option.radio.selected .indicator::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  .qb .option.check.selected .indicator::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+  }
+
+  .qb .option .option-text { display: flex; flex-direction: column; gap: 2px; }
+  .qb .option .option-label { font-weight: 500; }
+  .qb .option .option-sub { font-size: 0.82rem; color: var(--slate); }
+
+  .qb .field { margin-bottom: 16px; }
+  .qb .field:last-child { margin-bottom: 0; }
+
+  .qb .field label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--slate);
+    margin-bottom: 6px;
+  }
+
+  .qb .field input, .qb .field textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--cream);
+    color: var(--ink);
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.96rem;
+  }
+
+  .qb .field input:focus, .qb .field textarea:focus {
+    outline: 2px solid var(--amber);
+    outline-offset: 1px;
+  }
+
+  .qb .field.error input { border-color: var(--danger); }
+  .qb .field-error {
+    color: var(--danger);
+    font-size: 0.78rem;
+    margin-top: 6px;
+    display: none;
+  }
+  .qb .field.error .field-error { display: block; }
+
+  .qb .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .qb .inline-error {
+    color: var(--danger);
+    font-size: 0.82rem;
+    margin-top: 12px;
+    display: none;
+  }
+  .qb .inline-error.show { display: block; }
+
+  .qb .photo-upload {
+    border: 1px dashed var(--line);
+    border-radius: 5px;
+    padding: 22px 16px;
+    text-align: center;
+    position: relative;
+    background: var(--cream);
+    cursor: pointer;
+  }
+  .qb .photo-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .qb .photo-upload svg { width: 20px; height: 20px; color: var(--slate); margin-bottom: 8px; }
+  .qb .photo-upload .u-text { font-size: 0.9rem; color: var(--slate); }
+  .qb .photo-upload:hover { border-color: var(--amber-dark); }
+
+  .qb .thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .qb .thumbs img {
+    width: 64px; height: 64px; object-fit: cover; border-radius: 4px; border: 1px solid var(--line);
+  }
+
+  .qb .safety-card {
+    border: 1px solid var(--danger);
+    background: var(--danger-bg);
+    border-radius: 6px;
+    padding: 26px 24px;
+  }
+  .qb .safety-card h2 { color: var(--danger); font-size: 1.3rem; margin-bottom: 10px; }
+  .qb .safety-card p { color: var(--ink); font-size: 0.94rem; line-height: 1.55; margin: 0 0 18px 0; }
+  .qb .safety-card .call-btn {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 28px;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: var(--danger);
+    color: #FFF6F4;
+    border: none;
     padding: 16px 18px;
-    border: 1px dashed var(--line);
-    border-radius: 4px;
-    transition: border-color 0.15s ease, background 0.15s ease;
-  }
-
-  .guided-link:hover {
-    border-color: var(--amber-dark, #9A7300);
-    background: var(--white);
-  }
-
-  .guided-link svg {
-    width: 22px;
-    height: 22px;
-    flex-shrink: 0;
-    color: var(--amber-dark, #9A7300);
-  }
-
-  .guided-link span {
-    font-size: 0.92rem;
-    color: var(--slate);
-  }
-
-  .guided-link strong {
-    display: block;
-    color: var(--ink);
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
-    margin-bottom: 2px;
+    font-size: 1.02rem;
+    margin-bottom: 10px;
+  }
+  .qb .safety-card .call-btn:hover { background: #9A2F24; }
+  .qb .safety-card .call-btn svg { width: 19px; height: 19px; flex-shrink: 0; }
+  .qb .safety-card .call-btn .call-number {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+  .qb .safety-card .copy-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .qb .safety-card .copy-row button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--slate);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .qb .summary-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .qb .summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .qb .summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .qb .summary-row .s-label { font-size: 0.78rem; color: var(--slate); flex-shrink: 0; width: 42%; }
+  .qb .summary-row .s-value { font-size: 0.92rem; text-align: right; flex: 1; }
+
+  .qb .nav-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .qb button {
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.96rem;
+    font-weight: 600;
+    padding: 14px 22px;
+    border: none;
+  }
+
+  .qb .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    flex: 1;
+  }
+  .qb .btn-primary:hover { background: var(--ink-soft); }
+  .qb .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .qb .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .qb .btn-ghost:hover { border-color: var(--slate); }
+
+  .qb .btn-full { width: 100%; }
+
+  .qb .intro .stage-title { font-size: 1.9rem; margin-bottom: 14px; }
+  .qb .intro-points { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 26px; }
+  .qb .intro-points div { display: flex; gap: 10px; align-items: flex-start; font-size: 0.92rem; color: var(--slate); }
+  .qb .intro-points div::before { content: "—"; color: var(--amber-dark); flex-shrink: 0; }
+
+  .qb .confirm {
+    text-align: center;
+    padding: 20px 6px 4px;
+  }
+  .qb .confirm .check-badge {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--amber); color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 1.3rem; font-weight: 700;
+  }
+  .qb .confirm p { color: var(--slate); font-size: 0.92rem; line-height: 1.55; }
+  .qb .confirm .note {
+    margin-top: 18px;
+    font-size: 0.8rem;
+    color: var(--slate);
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  .qb .copied-tag {
+    font-size: 0.8rem;
+    color: var(--amber-dark);
+    margin-left: 10px;
   }
 
   /* Footer */
@@ -1106,86 +1287,694 @@
           <span>Dromana, VIC &mdash; servicing the Mornington Peninsula &amp; beyond</span>
         </div>
       </div>
-      <a class="guided-link" href="/quote-builder.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.47c.4.36.63.87.63 1.4V16h6.74v-1.13c0-.53.23-1.04.63-1.4A6 6 0 0 0 12 3z"/></svg>
-        <span>
-          <strong>Not sure where to start?</strong>
-          Try the guided quote builder &rarr;
-        </span>
-      </a>
     </div>
-    <form name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/thank-you.html">
-      <input type="hidden" name="form-name" value="quote-request">
-      <p style="display:none;">
-        <label>Don't fill this out if you're human: <input name="bot-field"></label>
-      </p>
-      <div class="row2">
-        <div class="field">
-          <label for="name">Name</label>
-          <input id="name" name="Name" type="text" required>
-        </div>
-        <div class="field">
-          <label for="phone">Phone</label>
-          <input id="phone" name="Phone" type="tel" required>
-        </div>
-      </div>
-      <div class="field">
-        <label for="address">Home address</label>
-        <input id="address" name="Address" type="text" placeholder="e.g. 12 Foreshore Rd, Dromana" autocomplete="street-address">
-      </div>
-      <div class="field">
-        <label for="jobtype">Type of job</label>
-        <select id="jobtype" name="Job type">
-          <option>Switchboard upgrade</option>
-          <option>Rewiring</option>
-          <option>Lighting</option>
-          <option>General repair</option>
-          <option>Renovation / new circuit</option>
-          <option>Smoke alarms</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="details">Job details</label>
-        <textarea id="details" name="Details" placeholder="Tell me a bit about what needs doing"></textarea>
-      </div>
-      <div class="field">
-        <label for="photos">Photos (optional)</label>
-        <div class="file-upload">
-          <input id="photos" name="Photos" type="file" accept="image/*" multiple>
-          <label for="photos" class="file-upload-label">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span class="file-upload-text">Attach photos of the job</span>
-          </label>
-          <div class="file-upload-list" id="photos-list"></div>
-        </div>
-      </div>
-      <button type="submit">Send request</button>
-    </form>
+    <div class="qb">
+      <div class="progress-track"><div class="progress-fill" id="qbProgressFill"></div></div>
+      <div class="qb-step-label" id="qbStepLabel"></div>
+      <div id="qbStage"></div>
+    </div>
   </div>
 </section>
 
+<!-- Static fallback so Netlify's form-detection bot recognises this form and its fields -->
+<form name="quote-request" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+  <input type="text" name="Name">
+  <input type="tel" name="Phone">
+  <input type="text" name="Address">
+  <select name="Job type">
+    <option>Switchboard upgrade</option>
+    <option>Rewiring</option>
+    <option>Lighting</option>
+    <option>General repair</option>
+    <option>Renovation / new circuit</option>
+    <option>Smoke alarms</option>
+    <option>EV charger install</option>
+    <option>Other</option>
+  </select>
+  <textarea name="Details"></textarea>
+  <input type="file" name="Photos">
+  <input name="bot-field">
+</form>
+
 <script>
-  (function() {
-    var photosInput = document.getElementById('photos');
-    if (!photosInput) return;
-    var text = document.querySelector('.file-upload-text');
-    var list = document.getElementById('photos-list');
-    photosInput.addEventListener('change', function() {
-      var files = Array.from(photosInput.files || []);
-      list.innerHTML = '';
-      if (files.length) {
-        text.textContent = files.length === 1 ? '1 photo selected' : files.length + ' photos selected';
-        files.forEach(function(f) {
-          var row = document.createElement('div');
-          row.textContent = f.name;
-          list.appendChild(row);
+(function () {
+  // ---------- data ----------
+  var JOB_OPTIONS = [
+    { value: 'switchboard', label: 'Switchboard upgrade', sub: 'Old fuse box, safety switch, insurance requirement' },
+    { value: 'lighting', label: 'Lighting', sub: 'Downlights, outdoor lighting, ceiling fans, dimmers' },
+    { value: 'ev', label: 'EV charger install', sub: 'Home charger for an electric vehicle' },
+    { value: 'repair', label: 'General repair or fault', sub: 'Something is not working right' },
+    { value: 'reno', label: 'Renovation or new circuit', sub: 'Kitchen, bathroom, extension, granny flat' },
+    { value: 'smoke', label: 'Smoke alarms', sub: 'Install, replace, or bring up to code' },
+    { value: 'rewire', label: 'Rewiring', sub: 'Full or partial rewire of an older property' },
+    { value: 'other', label: 'Something else', sub: '' }
+  ];
+
+  var STEP_DEFS = {
+    jobType: {
+      type: 'single', key: 'jobType',
+      title: "What's the job?",
+      sub: "Pick the option that's closest — there's room for detail later.",
+      options: JOB_OPTIONS
+    },
+    switchboard_reason: {
+      type: 'single', key: 'switchboardReason',
+      title: "What's prompting the upgrade?",
+      options: [
+        { value: 'fusebox', label: 'Still on an old fuse box' },
+        { value: 'trips', label: 'Safety switch keeps tripping' },
+        { value: 'insurance', label: 'Insurer or bank requires it' },
+        { value: 'renovating', label: 'Renovating and need more capacity' },
+        { value: 'unsure', label: 'Not sure — want it assessed' }
+      ]
+    },
+    phase: {
+      type: 'single', key: 'phase',
+      title: 'Single or three phase power?',
+      sub: "If you're not sure, that's fine — pick 'not sure'.",
+      options: [
+        { value: 'single', label: 'Single phase' },
+        { value: 'three', label: 'Three phase' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    lighting_scope: {
+      type: 'multi', key: 'lightingScope',
+      title: 'What kind of lighting work?',
+      sub: 'Select everything that applies.',
+      options: [
+        { value: 'downlights', label: 'LED downlights' },
+        { value: 'outdoor', label: 'Outdoor or garden lighting' },
+        { value: 'fans', label: 'Ceiling fans' },
+        { value: 'dimmers', label: 'Dimmer switches' },
+        { value: 'other', label: 'Something else' }
+      ]
+    },
+    lighting_count: {
+      type: 'single', key: 'lightingCount',
+      title: 'Roughly how many rooms or points?',
+      options: [
+        { value: '1-3', label: '1–3' },
+        { value: '4-8', label: '4–8' },
+        { value: '9+', label: '9 or more' },
+        { value: 'unsure', label: 'Not sure yet' }
+      ]
+    },
+    ev_charger: {
+      type: 'single', key: 'evCharger',
+      title: 'Do you already have a charger?',
+      options: [
+        { value: 'have', label: 'Yes, I have the charger' },
+        { value: 'need', label: 'No, I need help choosing one' },
+        { value: 'unsure', label: 'Not sure yet' }
+      ]
+    },
+    ev_location: {
+      type: 'single', key: 'evLocation',
+      title: 'Where will it be installed?',
+      options: [
+        { value: 'garage', label: 'Garage' },
+        { value: 'carport', label: 'Carport' },
+        { value: 'driveway', label: 'Open driveway' },
+        { value: 'other', label: 'Somewhere else' }
+      ]
+    },
+    ev_distance: {
+      type: 'single', key: 'evDistance',
+      title: 'How far is that from the switchboard?',
+      sub: "A rough guess is fine — this affects cabling.",
+      options: [
+        { value: 'near', label: 'Close by (under 5m)' },
+        { value: 'medium', label: 'Medium run (5–15m)' },
+        { value: 'far', label: 'Long run (15m+)' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    repair_symptoms: {
+      type: 'multi', key: 'repairSymptoms',
+      title: "What's happening?",
+      sub: 'Select everything that applies.',
+      options: [
+        { value: 'outage', label: 'Power out in part of the house' },
+        { value: 'notworking', label: 'A switch or power point not working' },
+        { value: 'flicker', label: 'Lights flickering or dimming' },
+        { value: 'rcd', label: 'Safety switch (RCD) keeps tripping' },
+        { value: 'hazard', label: 'Burning smell, sparking, or scorch marks' },
+        { value: 'other', label: 'Something else' }
+      ]
+    },
+    reno_scope: {
+      type: 'single', key: 'renoScope',
+      title: 'What best describes the scope?',
+      options: [
+        { value: 'kitchen', label: 'Kitchen renovation' },
+        { value: 'bathroom', label: 'Bathroom renovation' },
+        { value: 'extension', label: 'Home extension' },
+        { value: 'granny', label: 'Granny flat or shed' },
+        { value: 'other', label: 'Something else' }
+      ]
+    },
+    reno_builder: {
+      type: 'single', key: 'renoBuilder',
+      title: 'Is a builder already involved?',
+      options: [
+        { value: 'yes', label: 'Yes, mid-project' },
+        { value: 'planned', label: 'Not yet, still planning' },
+        { value: 'diy', label: 'No builder — owner-managed' }
+      ]
+    },
+    smoke_count: {
+      type: 'single', key: 'smokeCount',
+      title: 'How many smoke alarms are currently installed?',
+      options: [
+        { value: '0', label: 'None yet' },
+        { value: '1-2', label: '1–2' },
+        { value: '3-5', label: '3–5' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    smoke_type: {
+      type: 'single', key: 'smokeType',
+      title: 'Hardwired or battery?',
+      options: [
+        { value: 'hardwired', label: 'Hardwired' },
+        { value: 'battery', label: 'Battery only' },
+        { value: 'mixed', label: 'A mix, or not sure' }
+      ]
+    },
+    property_age: {
+      type: 'single', key: 'propertyAge',
+      title: 'Roughly how old is the property?',
+      sub: 'Older wiring changes what we check first.',
+      options: [
+        { value: 'pre1980', label: 'Built before 1980' },
+        { value: '1980-2000', label: 'Built 1980–2000' },
+        { value: 'post2000', label: 'Built after 2000' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    property_storeys: {
+      type: 'single', key: 'storeys',
+      title: 'Single or double storey?',
+      options: [
+        { value: 'single', label: 'Single storey' },
+        { value: 'double', label: 'Double storey' }
+      ]
+    },
+    rewire_issues: {
+      type: 'multi', key: 'rewireIssues',
+      title: 'Any issues you have noticed?',
+      sub: 'Select everything that applies, or skip if none.',
+      options: [
+        { value: 'flicker', label: 'Flickering lights' },
+        { value: 'trips', label: 'Frequent trips' },
+        { value: 'discolour', label: 'Discoloured switches or points' },
+        { value: 'none', label: 'None currently' }
+      ]
+    },
+    other_details: {
+      type: 'text', key: 'otherDetails',
+      title: 'Tell me a bit more about the job',
+      placeholder: "What needs doing?",
+      multiline: true
+    },
+    property_type: {
+      type: 'single', key: 'propertyType',
+      title: 'What type of property is it?',
+      options: [
+        { value: 'house', label: 'House' },
+        { value: 'townhouse', label: 'Townhouse' },
+        { value: 'unit', label: 'Unit or apartment' },
+        { value: 'other', label: 'Other' }
+      ]
+    },
+    timeframe: {
+      type: 'single', key: 'timeframe',
+      title: 'When would you like this done?',
+      options: [
+        { value: 'urgent', label: 'As soon as possible' },
+        { value: '2weeks', label: 'Within the next couple of weeks' },
+        { value: 'flexible', label: "I'm flexible" }
+      ]
+    },
+    photos: {
+      type: 'photos', key: 'photos',
+      title: 'Add a few photos (optional)',
+      sub: 'Photos of the switchboard, the area, or the issue help with an accurate quote.'
+    },
+    contact_name: {
+      type: 'text', key: 'contactName',
+      title: 'What name should I put this under?',
+      placeholder: 'Full name',
+      required: true
+    },
+    contact_phone: {
+      type: 'text', key: 'contactPhone',
+      title: 'Best phone number to reach you on?',
+      placeholder: '04xx xxx xxx',
+      inputType: 'tel',
+      required: true
+    },
+    contact_address: {
+      type: 'text', key: 'contactAddress',
+      title: 'Home address',
+      placeholder: 'e.g. 12 Foreshore Rd, Dromana',
+      required: true
+    },
+    contact_time: {
+      type: 'single', key: 'contactTime',
+      title: 'Best time to call you back?',
+      options: [
+        { value: 'morning', label: 'Morning' },
+        { value: 'afternoon', label: 'Afternoon' },
+        { value: 'evening', label: 'Evening' },
+        { value: 'anytime', label: 'Anytime' }
+      ]
+    },
+    safety_alert: { type: 'safety' }
+  };
+
+  var LABEL_LOOKUP = {};
+  Object.keys(STEP_DEFS).forEach(function (id) {
+    var def = STEP_DEFS[id];
+    if (def.options) {
+      LABEL_LOOKUP[id] = {};
+      def.options.forEach(function (o) { LABEL_LOOKUP[id][o.value] = o.label; });
+    }
+  });
+
+  function getStepOrder(answers) {
+    var order = ['jobType'];
+    switch (answers.jobType) {
+      case 'switchboard': order.push('switchboard_reason', 'phase'); break;
+      case 'lighting': order.push('lighting_scope', 'lighting_count'); break;
+      case 'ev': order.push('ev_charger', 'ev_location', 'ev_distance'); break;
+      case 'repair':
+        order.push('repair_symptoms');
+        if (answers.repairSymptoms && answers.repairSymptoms.indexOf('hazard') !== -1) {
+          order.push('safety_alert');
+        }
+        break;
+      case 'reno': order.push('reno_scope', 'reno_builder'); break;
+      case 'smoke': order.push('smoke_count', 'smoke_type'); break;
+      case 'rewire': order.push('property_age', 'rewire_issues'); break;
+      case 'other': order.push('other_details'); break;
+      default: break;
+    }
+    if (answers.jobType) {
+      order.push('property_type', 'property_storeys', 'timeframe', 'photos', 'contact_name', 'contact_phone', 'contact_address', 'contact_time');
+    }
+    return order;
+  }
+
+  // ---------- state ----------
+  var answers = {};
+  var photoFiles = [];
+  var currentIndex = -1; // -1 = intro, N = summary
+  var submitState = 'idle'; // idle | submitting | success | error
+  var submitErrorMsg = '';
+
+  var stage = document.getElementById('qbStage');
+  var progressFill = document.getElementById('qbProgressFill');
+  var stepLabel = document.getElementById('qbStepLabel');
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    attrs = attrs || {};
+    Object.keys(attrs).forEach(function (k) {
+      if (k === 'class') e.className = attrs[k];
+      else if (k === 'text') e.textContent = attrs[k];
+      else if (k === 'html') e.innerHTML = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+
+  function updateProgress() {
+    var order = getStepOrder(answers);
+    var total = order.length;
+    if (currentIndex === -1) {
+      progressFill.style.width = '0%';
+      stepLabel.textContent = '';
+    } else if (currentIndex >= total) {
+      progressFill.style.width = '100%';
+      stepLabel.textContent = 'Review';
+    } else {
+      var pct = Math.round(((currentIndex + 1) / total) * 100);
+      progressFill.style.width = pct + '%';
+      stepLabel.textContent = 'Step ' + (currentIndex + 1) + ' of ' + total;
+    }
+  }
+
+  function goNext() {
+    var order = getStepOrder(answers);
+    if (currentIndex >= 0 && currentIndex < order.length) {
+      var id = order[currentIndex];
+      if (!validateStep(id)) return;
+    }
+    currentIndex++;
+    render();
+  }
+
+  function goBack() {
+    if (currentIndex <= -1) return;
+    currentIndex--;
+    render();
+  }
+
+  function validateStep(id) {
+    var def = STEP_DEFS[id];
+    if (!def) return true;
+    if (def.type === 'safety') return true;
+    if (def.type === 'single') {
+      if (answers[def.key] === undefined) { showInlineError(id); return false; }
+    }
+    if (def.type === 'text' && def.required) {
+      if (!answers[def.key] || !answers[def.key].trim()) { showInlineError(id); return false; }
+    }
+    return true;
+  }
+
+  function showInlineError(id) {
+    var errEl = document.getElementById('err-' + id);
+    if (errEl) errEl.classList.add('show');
+  }
+
+  function renderIntro() {
+    var card = el('div', { class: 'card intro' });
+    card.appendChild(el('h1', { class: 'stage-title', text: "Let's scope your job" }));
+    card.appendChild(el('p', { class: 'stage-sub', text: 'Answer a few quick questions and I\'ll put together everything I need to send back an accurate quote — usually within 24 hours.' }));
+    var points = el('div', { class: 'intro-points' }, [
+      el('div', { text: 'Takes about two minutes' }),
+      el('div', { text: 'Questions adjust to the kind of job' }),
+      el('div', { text: 'You can attach photos at the end' })
+    ]);
+    card.appendChild(points);
+    var btn = el('button', { class: 'btn-primary btn-full', text: 'Start' });
+    btn.addEventListener('click', goNext);
+    card.appendChild(btn);
+    return card;
+  }
+
+  function renderQuestion(id, def) {
+    var card = el('div', { class: 'card' });
+    card.appendChild(el('h2', { class: 'stage-title', text: def.title }));
+    if (def.sub) card.appendChild(el('p', { class: 'stage-sub', text: def.sub }));
+
+    if (def.type === 'single' || def.type === 'multi') {
+      var isMulti = def.type === 'multi';
+      var opts = el('div', { class: 'options' });
+      def.options.forEach(function (o) {
+        var selected = isMulti
+          ? (answers[def.key] || []).indexOf(o.value) !== -1
+          : answers[def.key] === o.value;
+        var indicator = el('div', { class: 'indicator' });
+        var textWrap = el('div', { class: 'option-text' }, [
+          el('div', { class: 'option-label', text: o.label }),
+          o.sub ? el('div', { class: 'option-sub', text: o.sub }) : null
+        ]);
+        var opt = el('div', {
+          class: 'option ' + (isMulti ? 'check' : 'radio') + (selected ? ' selected' : ''),
+          role: 'button', tabindex: '0'
+        }, [indicator, textWrap]);
+        opt.addEventListener('click', function () {
+          if (isMulti) {
+            var arr = answers[def.key] ? answers[def.key].slice() : [];
+            var i = arr.indexOf(o.value);
+            if (i === -1) arr.push(o.value); else arr.splice(i, 1);
+            answers[def.key] = arr;
+          } else {
+            answers[def.key] = o.value;
+          }
+          clearError(id);
+          render();
+          if (!isMulti) {
+            setTimeout(goNext, 140);
+          }
         });
+        opts.appendChild(opt);
+      });
+      card.appendChild(opts);
+      if (def.type === 'multi') {
+        var err = el('div', { class: 'inline-error', id: 'err-' + id, text: 'Pick at least one, or Continue if none apply.' });
+        card.appendChild(err);
+      }
+      if (isMulti) card.appendChild(navRow(id, true));
+    }
+
+    if (def.type === 'text') {
+      var field = el('div', { class: 'field' });
+      field.appendChild(el('label', { for: id, text: def.title, class: 'sr-only' }));
+      var input = def.multiline ? el('textarea', { id: id, rows: '4', placeholder: def.placeholder || '' })
+                                 : el('input', { id: id, type: def.inputType || 'text', placeholder: def.placeholder || '' });
+      input.value = answers[def.key] || '';
+      input.addEventListener('input', function () {
+        answers[def.key] = input.value;
+        clearError(id);
+      });
+      field.appendChild(input);
+      var errT = el('div', { class: 'field-error', id: 'err-' + id, text: 'This one\'s needed to send the request.' });
+      field.appendChild(errT);
+      card.appendChild(field);
+      card.appendChild(navRow(id, true));
+    }
+
+    if (def.type === 'photos') {
+      var upload = el('div', { class: 'photo-upload' });
+      var icon = el('div', { html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' });
+      var fileInput = el('input', { type: 'file', accept: 'image/*', multiple: 'multiple' });
+      var utext = el('div', { class: 'u-text', text: photoFiles.length ? (photoFiles.length + (photoFiles.length === 1 ? ' photo added' : ' photos added')) : 'Tap to choose photos' });
+      upload.appendChild(icon);
+      upload.appendChild(utext);
+      upload.appendChild(fileInput);
+      card.appendChild(upload);
+
+      var thumbs = el('div', { class: 'thumbs' });
+      photoFiles.forEach(function (f) {
+        var img = el('img', { src: URL.createObjectURL(f) });
+        thumbs.appendChild(img);
+      });
+      card.appendChild(thumbs);
+
+      fileInput.addEventListener('change', function () {
+        photoFiles = photoFiles.concat(Array.from(fileInput.files || []));
+        render();
+      });
+
+      card.appendChild(navRow(id, true));
+    }
+
+    if (def.type === 'single') {
+      var errS = el('div', { class: 'inline-error', id: 'err-' + id, text: 'Pick an option to continue.' });
+      card.appendChild(errS);
+      var backRow = el('div', { class: 'nav-row' });
+      var backOnly = el('button', { class: 'btn-ghost', text: 'Back' });
+      backOnly.addEventListener('click', goBack);
+      backRow.appendChild(backOnly);
+      card.appendChild(backRow);
+    }
+
+    return card;
+  }
+
+  function navRow(id, showBoth) {
+    var row = el('div', { class: 'nav-row' });
+    if (currentIndex > -1) {
+      var back = el('button', { class: 'btn-ghost', text: 'Back' });
+      back.addEventListener('click', goBack);
+      row.appendChild(back);
+    }
+    var next = el('button', { class: 'btn-primary', text: 'Continue' });
+    next.addEventListener('click', goNext);
+    row.appendChild(next);
+    return row;
+  }
+
+  function clearError(id) {
+    var e = document.getElementById('err-' + id);
+    if (e) e.classList.remove('show');
+  }
+
+  function renderSafety() {
+    var wrap = el('div', {});
+    var card = el('div', { class: 'safety-card' });
+    card.appendChild(el('h2', { text: 'Please call rather than wait for a quote' }));
+    card.appendChild(el('p', { text: "Burning smells, sparking, or scorch marks can mean an active electrical hazard. If you smell burning or see sparks right now, switch off the affected circuit at the switchboard if it's safe to do so, and call straight away." }));
+
+    var callBtn = el('a', {
+      class: 'call-btn', href: 'tel:+61413432850',
+      html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Josh now &middot; <span class="call-number">0413 432 850</span>'
+    });
+    card.appendChild(callBtn);
+
+    var copyRow = el('div', { class: 'copy-row' });
+    var copyBtn = el('button', { text: "Number not dialling? Copy it instead" });
+    var copyTag = el('span', { class: 'copied-tag' });
+    copyBtn.addEventListener('click', function () {
+      var text = '0413 432 850';
+      function done() { copyTag.textContent = 'Copied'; setTimeout(function () { copyTag.textContent = ''; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
       } else {
-        text.textContent = 'Attach photos of the job';
+        fallbackCopy(text, done);
       }
     });
-  })();
+    copyRow.appendChild(copyBtn);
+    copyRow.appendChild(copyTag);
+    card.appendChild(copyRow);
+
+    var row = el('div', { class: 'nav-row' });
+    var back = el('button', { class: 'btn-ghost', text: 'Back' });
+    back.addEventListener('click', goBack);
+    var cont = el('button', { class: 'btn-primary', text: 'Continue with quote request' });
+    cont.addEventListener('click', goNext);
+    row.appendChild(back);
+    row.appendChild(cont);
+    card.appendChild(row);
+    wrap.appendChild(card);
+    return wrap;
+  }
+
+  function summaryPairs() {
+    var order = getStepOrder(answers).filter(function (id) { return STEP_DEFS[id].type !== 'safety'; });
+    var pairs = [];
+    order.forEach(function (id) {
+      var def = STEP_DEFS[id];
+      var val = answers[def.key];
+      var display = '';
+      if (def.type === 'single') display = (LABEL_LOOKUP[id] && LABEL_LOOKUP[id][val]) || '—';
+      else if (def.type === 'multi') {
+        display = (val && val.length) ? val.map(function (v) { return LABEL_LOOKUP[id][v]; }).join(', ') : 'None selected';
+      } else if (def.type === 'text') display = val || '—';
+      else if (def.type === 'photos') display = photoFiles.length ? (photoFiles.length + ' attached') : 'None attached';
+      pairs.push({ label: def.title, value: display });
+    });
+    return pairs;
+  }
+
+  function submitToNetlify() {
+    var fd = new FormData();
+    fd.append('form-name', 'quote-request');
+    fd.append('Name', answers.contactName || '');
+    fd.append('Phone', answers.contactPhone || '');
+    fd.append('Address', answers.contactAddress || '');
+    fd.append('Job type', (LABEL_LOOKUP.jobType && LABEL_LOOKUP.jobType[answers.jobType]) || 'Other');
+    var detailLines = summaryPairs().map(function (p) { return p.label + ': ' + p.value; });
+    fd.append('Details', '[Submitted via the guided Quote Builder]\n\n' + detailLines.join('\n'));
+    photoFiles.forEach(function (f) { fd.append('Photos', f, f.name); });
+    return fetch(window.location.pathname || '/', { method: 'POST', body: fd }).then(function (res) {
+      if (!res.ok) throw new Error('The server said something went wrong (' + res.status + ').');
+    }).catch(function (err) {
+      if (err instanceof Error && /server said/.test(err.message)) throw err;
+      throw new Error("Couldn't reach the server — check your connection and try again.");
+    });
+  }
+
+  function renderSummary() {
+    var card = el('div', { class: 'card' });
+    card.appendChild(el('h2', { class: 'stage-title', text: 'Review your request' }));
+    card.appendChild(el('p', { class: 'stage-sub', text: "Here's everything that'll go to Josh." }));
+
+    var list = el('div', { class: 'summary-list' });
+    summaryPairs().forEach(function (p) {
+      list.appendChild(el('div', { class: 'summary-row' }, [
+        el('div', { class: 's-label', text: p.label }),
+        el('div', { class: 's-value', text: p.value })
+      ]));
+    });
+    card.appendChild(list);
+
+    if (submitState === 'error') {
+      card.appendChild(el('div', {
+        class: 'inline-error show',
+        text: (submitErrorMsg || "Couldn't send that.") + ' Or call Josh directly on 0413 432 850.'
+      }));
+    }
+
+    var row = el('div', { class: 'nav-row' });
+    var back = el('button', { class: 'btn-ghost', text: 'Back' });
+    back.addEventListener('click', goBack);
+    var copy = el('button', { class: 'btn-ghost', text: 'Copy summary' });
+    var tag = el('span', { class: 'copied-tag' });
+    copy.addEventListener('click', function () {
+      var text = summaryPairs().map(function (p) { return p.label + ': ' + p.value; }).join('\n');
+      function done() { tag.textContent = 'Copied'; setTimeout(function () { tag.textContent = ''; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+      } else {
+        fallbackCopy(text, done);
+      }
+    });
+    var submitting = submitState === 'submitting';
+    var submit = el('button', { class: 'btn-primary', text: submitting ? 'Sending…' : 'Submit request' });
+    if (submitting) submit.disabled = true;
+    submit.addEventListener('click', function () {
+      if (submitState === 'submitting') return;
+      submitState = 'submitting';
+      render();
+      submitToNetlify().then(function () {
+        submitState = 'success';
+        render();
+      }).catch(function (err) {
+        submitState = 'error';
+        submitErrorMsg = (err && err.message) || '';
+        render();
+      });
+    });
+    row.appendChild(back);
+    row.appendChild(copy);
+    row.appendChild(submit);
+    card.appendChild(row);
+    card.appendChild(tag);
+    return card;
+  }
+
+  function fallbackCopy(text, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) { /* clipboard unavailable */ }
+  }
+
+  function renderConfirm() {
+    var card = el('div', { class: 'card confirm' });
+    card.appendChild(el('div', { class: 'check-badge', text: '✓' }));
+    card.appendChild(el('h2', { class: 'stage-title', text: 'Request sent' }));
+    card.appendChild(el('p', { text: "That's landed with Josh the same way the quote form does — expect a reply within 24 hours. For anything urgent, call 0413 432 850 directly." }));
+    var again = el('button', { class: 'btn-ghost btn-full', text: 'Submit another' });
+    again.style.marginTop = '20px';
+    again.addEventListener('click', function () {
+      answers = {}; photoFiles = []; submitState = 'idle'; submitErrorMsg = ''; currentIndex = -1; render();
+    });
+    card.appendChild(again);
+    return card;
+  }
+
+  function render() {
+    updateProgress();
+    stage.innerHTML = '';
+    var order = getStepOrder(answers);
+    if (currentIndex === -1) { stage.appendChild(renderIntro()); return; }
+    if (currentIndex >= order.length) {
+      stage.appendChild(submitState === 'success' ? renderConfirm() : renderSummary());
+      return;
+    }
+    var id = order[currentIndex];
+    var def = STEP_DEFS[id];
+    if (def.type === 'safety') stage.appendChild(renderSafety(id));
+    else stage.appendChild(renderQuestion(id, def));
+  }
+
+  render();
+})();
 </script>
 
 <footer>
