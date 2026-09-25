@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guided Quote Builder | Zip Electrical Services</title>
+<meta name="description" content="Answer a few quick questions about your electrical job and send Josh everything he needs for an accurate quote.">
+<link rel="canonical" href="https://www.zipelectricalservices.com/quote-builder.html">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #12181F;
+    --ink-soft: #232B34;
+    --cream: #F6F4EF;
+    --white: #FFFFFF;
+    --amber: #F5B400;
+    --amber-dark: #9A7300;
+    --slate: #5B6470;
+    --line: #E3DFD5;
+    --danger: #B23B2E;
+    --danger-bg: #FBEAE7;
+    --bg: var(--cream);
+    --surface: var(--white);
+    --text: var(--ink);
+    --text-muted: var(--slate);
+    --border: var(--line);
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12181F;
+      --surface: #1A2029;
+      --text: #F1EFE9;
+      --text-muted: #98A0AC;
+      --border: #2B333D;
+      --danger-bg: #2B1A17;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #12181F;
+    --surface: #1A2029;
+    --text: #F1EFE9;
+    --text-muted: #98A0AC;
+    --border: #2B333D;
+    --danger-bg: #2B1A17;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .step-label a, footer.foot a { text-decoration: underline; text-underline-offset: 2px; }
+
+  h1, h2, h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .shell {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 28px 18px 60px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .brand-row .logo {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .brand-row .logo span { color: var(--amber-dark); }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .brand-row .logo span { color: var(--amber); }
+  }
+  :root[data-theme="dark"] .brand-row .logo span { color: var(--amber); }
+
+  .brand-row .eyebrow {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+
+  .progress-track {
+    height: 4px;
+    width: 100%;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--amber);
+    width: 0%;
+    transition: width 0.25s ease;
+  }
+
+  .step-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    min-height: 1em;
+  }
+
+  main { flex: 1; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 30px 26px;
+  }
+
+  .stage-title {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .stage-sub {
+    color: var(--text-muted);
+    font-size: 0.96rem;
+    line-height: 1.5;
+    margin: 0 0 22px 0;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    border-radius: 5px;
+    padding: 14px 16px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    font-size: 0.96rem;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+
+  .option:hover { border-color: var(--amber-dark); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .option:hover { border-color: var(--amber); }
+  }
+  :root[data-theme="dark"] .option:hover { border-color: var(--amber); }
+
+  .option.selected {
+    border-color: var(--amber);
+    background: color-mix(in srgb, var(--amber) 12%, var(--surface));
+  }
+
+  .option .indicator {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .option.radio .indicator { border-radius: 50%; }
+  .option.check .indicator { border-radius: 4px; }
+
+  .option.selected .indicator {
+    border-color: var(--amber);
+    background: var(--amber);
+    position: relative;
+  }
+
+  .option.radio.selected .indicator::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .option.radio.selected .indicator::after { background: var(--ink); }
+  }
+
+  .option.check.selected .indicator::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+  }
+
+  .option .option-text { display: flex; flex-direction: column; gap: 2px; }
+  .option .option-label { font-weight: 500; }
+  .option .option-sub { font-size: 0.82rem; color: var(--text-muted); }
+
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .field input, .field textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.96rem;
+  }
+
+  .field input:focus, .field textarea:focus {
+    outline: 2px solid var(--amber);
+    outline-offset: 1px;
+  }
+
+  .field.error input { border-color: var(--danger); }
+  .field-error {
+    color: var(--danger);
+    font-size: 0.78rem;
+    margin-top: 6px;
+    display: none;
+  }
+  .field.error .field-error { display: block; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+  .inline-error {
+    color: var(--danger);
+    font-size: 0.82rem;
+    margin-top: 12px;
+    display: none;
+  }
+  .inline-error.show { display: block; }
+
+  .photo-upload {
+    border: 1px dashed var(--border);
+    border-radius: 5px;
+    padding: 22px 16px;
+    text-align: center;
+    position: relative;
+    background: var(--bg);
+    cursor: pointer;
+  }
+  .photo-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .photo-upload svg { width: 20px; height: 20px; color: var(--text-muted); margin-bottom: 8px; }
+  .photo-upload .u-text { font-size: 0.9rem; color: var(--text-muted); }
+  .photo-upload:hover { border-color: var(--amber-dark); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .photo-upload:hover { border-color: var(--amber); }
+  }
+  :root[data-theme="dark"] .photo-upload:hover { border-color: var(--amber); }
+
+  .thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .thumbs img {
+    width: 64px; height: 64px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border);
+  }
+
+  .safety-card {
+    border: 1px solid var(--danger);
+    background: var(--danger-bg);
+    border-radius: 6px;
+    padding: 26px 24px;
+  }
+  .safety-card h2 { color: var(--danger); font-size: 1.3rem; margin-bottom: 10px; }
+  .safety-card p { color: var(--text); font-size: 0.94rem; line-height: 1.55; margin: 0 0 18px 0; }
+  .safety-card .call-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: var(--danger);
+    color: #FFF6F4;
+    border: none;
+    padding: 16px 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.02rem;
+    margin-bottom: 10px;
+  }
+
+  .safety-card .call-btn:hover { background: #9A2F24; }
+
+  .safety-card .call-btn svg { width: 19px; height: 19px; flex-shrink: 0; }
+
+  .safety-card .call-btn .call-number {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .safety-card .copy-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .safety-card .copy-row button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .safety-card .copy-row .copied-tag { margin-left: 0; }
+
+  .summary-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .summary-row .s-label { font-size: 0.78rem; color: var(--text-muted); flex-shrink: 0; width: 42%; }
+  .summary-row .s-value { font-size: 0.92rem; text-align: right; flex: 1; }
+
+  .nav-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  button {
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.96rem;
+    font-weight: 600;
+    padding: 14px 22px;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    flex: 1;
+  }
+  .btn-primary:hover { background: var(--ink-soft); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-primary { background: var(--amber); color: var(--ink); }
+    :root:not([data-theme="light"]) .btn-primary:hover { background: #ffc933; }
+  }
+  :root[data-theme="dark"] .btn-primary { background: var(--amber); color: var(--ink); }
+  :root[data-theme="dark"] .btn-primary:hover { background: #ffc933; }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover { border-color: var(--text-muted); }
+
+  .btn-full { width: 100%; }
+
+  .intro .stage-title { font-size: 1.9rem; margin-bottom: 14px; }
+  .intro-points { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 26px; }
+  .intro-points div { display: flex; gap: 10px; align-items: flex-start; font-size: 0.92rem; color: var(--text-muted); }
+  .intro-points div::before { content: "—"; color: var(--amber-dark); flex-shrink: 0; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .intro-points div::before { color: var(--amber); }
+  }
+  :root[data-theme="dark"] .intro-points div::before { color: var(--amber); }
+
+  .confirm {
+    text-align: center;
+    padding: 20px 6px 4px;
+  }
+  .confirm .check-badge {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--amber); color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 1.3rem; font-weight: 700;
+  }
+  .confirm p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.55; }
+  .confirm .note {
+    margin-top: 18px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  footer.foot {
+    text-align: center;
+    margin-top: 30px;
+    color: var(--text-muted);
+    font-size: 0.74rem;
+  }
+
+  .copied-tag {
+    font-size: 0.8rem;
+    color: var(--amber-dark);
+    margin-left: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .copied-tag { color: var(--amber); }
+  }
+  :root[data-theme="dark"] .copied-tag { color: var(--amber); }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <div class="brand-row">
+    <a class="logo" href="/">ZIP <span>ELECTRICAL</span></a>
+    <div class="eyebrow mono">Quote Builder</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="step-label" id="stepLabel"></div>
+  <main id="stage"></main>
+  <footer class="foot">Dromana, VIC &middot; Lic. REC 37214 &middot; <a href="/#quote">Prefer the short form?</a></footer>
+</div>
+
+<!-- Static fallback so Netlify's form-detection bot recognises this as the same form registered on the homepage -->
+<form name="quote-request" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+  <input type="text" name="Name">
+  <input type="tel" name="Phone">
+  <input type="text" name="Address">
+  <select name="Job type">
+    <option>Switchboard upgrade</option>
+    <option>Rewiring</option>
+    <option>Lighting</option>
+    <option>General repair</option>
+    <option>Renovation / new circuit</option>
+    <option>Smoke alarms</option>
+    <option>EV charger install</option>
+    <option>Other</option>
+  </select>
+  <textarea name="Details"></textarea>
+  <input type="file" name="Photos">
+  <input name="bot-field">
+</form>
+
+<script>
+(function () {
+  // ---------- data ----------
+  var JOB_OPTIONS = [
+    { value: 'switchboard', label: 'Switchboard upgrade', sub: 'Old fuse box, safety switch, insurance requirement' },
+    { value: 'lighting', label: 'Lighting', sub: 'Downlights, outdoor lighting, ceiling fans, dimmers' },
+    { value: 'ev', label: 'EV charger install', sub: 'Home charger for an electric vehicle' },
+    { value: 'repair', label: 'General repair or fault', sub: 'Something is not working right' },
+    { value: 'reno', label: 'Renovation or new circuit', sub: 'Kitchen, bathroom, extension, granny flat' },
+    { value: 'smoke', label: 'Smoke alarms', sub: 'Install, replace, or bring up to code' },
+    { value: 'rewire', label: 'Rewiring', sub: 'Full or partial rewire of an older property' },
+    { value: 'other', label: 'Something else', sub: '' }
+  ];
+
+  var STEP_DEFS = {
+    jobType: {
+      type: 'single', key: 'jobType',
+      title: "What's the job?",
+      sub: "Pick the option that's closest — there's room for detail later.",
+      options: JOB_OPTIONS
+    },
+    switchboard_reason: {
+      type: 'single', key: 'switchboardReason',
+      title: "What's prompting the upgrade?",
+      options: [
+        { value: 'fusebox', label: 'Still on an old fuse box' },
+        { value: 'trips', label: 'Safety switch keeps tripping' },
+        { value: 'insurance', label: 'Insurer or bank requires it' },
+        { value: 'renovating', label: 'Renovating and need more capacity' },
+        { value: 'unsure', label: 'Not sure — want it assessed' }
+      ]
+    },
+    phase: {
+      type: 'single', key: 'phase',
+      title: 'Single or three phase power?',
+      sub: "If you're not sure, that's fine — pick 'not sure'.",
+      options: [
+        { value: 'single', label: 'Single phase' },
+        { value: 'three', label: 'Three phase' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    lighting_scope: {
+      type: 'multi', key: 'lightingScope',
+      title: 'What kind of lighting work?',
+      sub: 'Select everything that applies.',
+      options: [
+        { value: 'downlights', label: 'LED downlights' },
+        { value: 'outdoor', label: 'Outdoor or garden lighting' },
+        { value: 'fans', label: 'Ceiling fans' },
+        { value: 'dimmers', label: 'Dimmer switches' },
+        { value: 'other', label: 'Something else' }
+      ]
+    },
+    lighting_count: {
+      type: 'single', key: 'lightingCount',
+      title: 'Roughly how many rooms or points?',
+      options: [
+        { value: '1-3', label: '1–3' },
+        { value: '4-8', label: '4–8' },
+        { value: '9+', label: '9 or more' },
+        { value: 'unsure', label: 'Not sure yet' }
+      ]
+    },
+    ev_charger: {
+      type: 'single', key: 'evCharger',
+      title: 'Do you already have a charger?',
+      options: [
+        { value: 'have', label: 'Yes, I have the charger' },
+        { value: 'need', label: 'No, I need help choosing one' },
+        { value: 'unsure', label: 'Not sure yet' }
+      ]
+    },
+    ev_location: {
+      type: 'single', key: 'evLocation',
+      title: 'Where will it be installed?',
+      options: [
+        { value: 'garage', label: 'Garage' },
+        { value: 'carport', label: 'Carport' },
+        { value: 'driveway', label: 'Open driveway' },
+        { value: 'other', label: 'Somewhere else' }
+      ]
+    },
+    ev_distance: {
+      type: 'single', key: 'evDistance',
+      title: 'How far is that from the switchboard?',
+      sub: "A rough guess is fine — this affects cabling.",
+      options: [
+        { value: 'near', label: 'Close by (under 5m)' },
+        { value: 'medium', label: 'Medium run (5–15m)' },
+        { value: 'far', label: 'Long run (15m+)' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    repair_symptoms: {
+      type: 'multi', key: 'repairSymptoms',
+      title: "What's happening?",
+      sub: 'Select everything that applies.',
+      options: [
+        { value: 'outage', label: 'Power out in part of the house' },
+        { value: 'notworking', label: 'A switch or power point not working' },
+        { value: 'flicker', label: 'Lights flickering or dimming' },
+        { value: 'rcd', label: 'Safety switch (RCD) keeps tripping' },
+        { value: 'hazard', label: 'Burning smell, sparking, or scorch marks' },
+        { value: 'other', label: 'Something else' }
+      ]
+    },
+    reno_scope: {
+      type: 'single', key: 'renoScope',
+      title: 'What best describes the scope?',
+      options: [
+        { value: 'kitchen', label: 'Kitchen renovation' },
+        { value: 'bathroom', label: 'Bathroom renovation' },
+        { value: 'extension', label: 'Home extension' },
+        { value: 'granny', label: 'Granny flat or shed' },
+        { value: 'other', label: 'Something else' }
+      ]
+    },
+    reno_builder: {
+      type: 'single', key: 'renoBuilder',
+      title: 'Is a builder already involved?',
+      options: [
+        { value: 'yes', label: 'Yes, mid-project' },
+        { value: 'planned', label: 'Not yet, still planning' },
+        { value: 'diy', label: 'No builder — owner-managed' }
+      ]
+    },
+    smoke_count: {
+      type: 'single', key: 'smokeCount',
+      title: 'How many smoke alarms are currently installed?',
+      options: [
+        { value: '0', label: 'None yet' },
+        { value: '1-2', label: '1–2' },
+        { value: '3-5', label: '3–5' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    smoke_type: {
+      type: 'single', key: 'smokeType',
+      title: 'Hardwired or battery?',
+      options: [
+        { value: 'hardwired', label: 'Hardwired' },
+        { value: 'battery', label: 'Battery only' },
+        { value: 'mixed', label: 'A mix, or not sure' }
+      ]
+    },
+    property_age: {
+      type: 'single', key: 'propertyAge',
+      title: 'Roughly how old is the property?',
+      sub: 'Older wiring changes what we check first.',
+      options: [
+        { value: 'pre1980', label: 'Built before 1980' },
+        { value: '1980-2000', label: 'Built 1980–2000' },
+        { value: 'post2000', label: 'Built after 2000' },
+        { value: 'unsure', label: 'Not sure' }
+      ]
+    },
+    property_storeys: {
+      type: 'single', key: 'storeys',
+      title: 'Single or double storey?',
+      options: [
+        { value: 'single', label: 'Single storey' },
+        { value: 'double', label: 'Double storey' }
+      ]
+    },
+    rewire_issues: {
+      type: 'multi', key: 'rewireIssues',
+      title: 'Any issues you have noticed?',
+      sub: 'Select everything that applies, or skip if none.',
+      options: [
+        { value: 'flicker', label: 'Flickering lights' },
+        { value: 'trips', label: 'Frequent trips' },
+        { value: 'discolour', label: 'Discoloured switches or points' },
+        { value: 'none', label: 'None currently' }
+      ]
+    },
+    other_details: {
+      type: 'text', key: 'otherDetails',
+      title: 'Tell me a bit more about the job',
+      placeholder: "What needs doing?",
+      multiline: true
+    },
+    property_type: {
+      type: 'single', key: 'propertyType',
+      title: 'What type of property is it?',
+      options: [
+        { value: 'house', label: 'House' },
+        { value: 'townhouse', label: 'Townhouse' },
+        { value: 'unit', label: 'Unit or apartment' },
+        { value: 'other', label: 'Other' }
+      ]
+    },
+    timeframe: {
+      type: 'single', key: 'timeframe',
+      title: 'When would you like this done?',
+      options: [
+        { value: 'urgent', label: 'As soon as possible' },
+        { value: '2weeks', label: 'Within the next couple of weeks' },
+        { value: 'flexible', label: "I'm flexible" }
+      ]
+    },
+    photos: {
+      type: 'photos', key: 'photos',
+      title: 'Add a few photos (optional)',
+      sub: 'Photos of the switchboard, the area, or the issue help with an accurate quote.'
+    },
+    contact_name: {
+      type: 'text', key: 'contactName',
+      title: 'What name should I put this under?',
+      placeholder: 'Full name',
+      required: true
+    },
+    contact_phone: {
+      type: 'text', key: 'contactPhone',
+      title: 'Best phone number to reach you on?',
+      placeholder: '04xx xxx xxx',
+      inputType: 'tel',
+      required: true
+    },
+    contact_address: {
+      type: 'text', key: 'contactAddress',
+      title: 'Home address',
+      placeholder: 'e.g. 12 Foreshore Rd, Dromana',
+      required: true
+    },
+    contact_time: {
+      type: 'single', key: 'contactTime',
+      title: 'Best time to call you back?',
+      options: [
+        { value: 'morning', label: 'Morning' },
+        { value: 'afternoon', label: 'Afternoon' },
+        { value: 'evening', label: 'Evening' },
+        { value: 'anytime', label: 'Anytime' }
+      ]
+    },
+    safety_alert: { type: 'safety' }
+  };
+
+  var LABEL_LOOKUP = {};
+  Object.keys(STEP_DEFS).forEach(function (id) {
+    var def = STEP_DEFS[id];
+    if (def.options) {
+      LABEL_LOOKUP[id] = {};
+      def.options.forEach(function (o) { LABEL_LOOKUP[id][o.value] = o.label; });
+    }
+  });
+
+  function getStepOrder(answers) {
+    var order = ['jobType'];
+    switch (answers.jobType) {
+      case 'switchboard': order.push('switchboard_reason', 'phase'); break;
+      case 'lighting': order.push('lighting_scope', 'lighting_count'); break;
+      case 'ev': order.push('ev_charger', 'ev_location', 'ev_distance'); break;
+      case 'repair':
+        order.push('repair_symptoms');
+        if (answers.repairSymptoms && answers.repairSymptoms.indexOf('hazard') !== -1) {
+          order.push('safety_alert');
+        }
+        break;
+      case 'reno': order.push('reno_scope', 'reno_builder'); break;
+      case 'smoke': order.push('smoke_count', 'smoke_type'); break;
+      case 'rewire': order.push('property_age', 'rewire_issues'); break;
+      case 'other': order.push('other_details'); break;
+      default: break;
+    }
+    if (answers.jobType) {
+      order.push('property_type', 'property_storeys', 'timeframe', 'photos', 'contact_name', 'contact_phone', 'contact_address', 'contact_time');
+    }
+    return order;
+  }
+
+  // ---------- state ----------
+  var answers = {};
+  var photoFiles = [];
+  var currentIndex = -1; // -1 = intro, N = summary
+  var submitState = 'idle'; // idle | submitting | success | error
+  var submitErrorMsg = '';
+
+  var stage = document.getElementById('stage');
+  var progressFill = document.getElementById('progressFill');
+  var stepLabel = document.getElementById('stepLabel');
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    attrs = attrs || {};
+    Object.keys(attrs).forEach(function (k) {
+      if (k === 'class') e.className = attrs[k];
+      else if (k === 'text') e.textContent = attrs[k];
+      else if (k === 'html') e.innerHTML = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+
+  function updateProgress() {
+    var order = getStepOrder(answers);
+    var total = order.length;
+    if (currentIndex === -1) {
+      progressFill.style.width = '0%';
+      stepLabel.textContent = '';
+    } else if (currentIndex >= total) {
+      progressFill.style.width = '100%';
+      stepLabel.textContent = 'Review';
+    } else {
+      var pct = Math.round(((currentIndex + 1) / total) * 100);
+      progressFill.style.width = pct + '%';
+      stepLabel.textContent = 'Step ' + (currentIndex + 1) + ' of ' + total;
+    }
+  }
+
+  function goNext() {
+    var order = getStepOrder(answers);
+    if (currentIndex >= 0 && currentIndex < order.length) {
+      var id = order[currentIndex];
+      if (!validateStep(id)) return;
+    }
+    currentIndex++;
+    render();
+  }
+
+  function goBack() {
+    if (currentIndex <= -1) return;
+    currentIndex--;
+    render();
+  }
+
+  function validateStep(id) {
+    var def = STEP_DEFS[id];
+    if (!def) return true;
+    if (def.type === 'safety') return true;
+    if (def.type === 'single') {
+      if (answers[def.key] === undefined) { showInlineError(id); return false; }
+    }
+    if (def.type === 'text' && def.required) {
+      if (!answers[def.key] || !answers[def.key].trim()) { showInlineError(id); return false; }
+    }
+    return true;
+  }
+
+  function showInlineError(id) {
+    var errEl = document.getElementById('err-' + id);
+    if (errEl) errEl.classList.add('show');
+  }
+
+  function render() {
+    updateProgress();
+    stage.innerHTML = '';
+    if (currentIndex === -1) {
+      stage.appendChild(renderIntro());
+      return;
+    }
+    var order = getStepOrder(answers);
+    if (currentIndex >= order.length) {
+      stage.appendChild(renderSummary());
+      return;
+    }
+    var id = order[currentIndex];
+    var def = STEP_DEFS[id];
+    if (def.type === 'safety') {
+      stage.appendChild(renderSafety(id));
+    } else {
+      stage.appendChild(renderQuestion(id, def));
+    }
+  }
+
+  function renderIntro() {
+    var card = el('div', { class: 'card intro' });
+    card.appendChild(el('h1', { class: 'stage-title', text: "Let's scope your job" }));
+    card.appendChild(el('p', { class: 'stage-sub', text: 'Answer a few quick questions and I\'ll put together everything Josh needs to send back an accurate quote — usually within 24 hours.' }));
+    var points = el('div', { class: 'intro-points' }, [
+      el('div', { text: 'Takes about two minutes' }),
+      el('div', { text: 'Questions adjust to the kind of job' }),
+      el('div', { text: 'You can attach photos at the end' })
+    ]);
+    card.appendChild(points);
+    var btn = el('button', { class: 'btn-primary btn-full', text: 'Start' });
+    btn.addEventListener('click', goNext);
+    card.appendChild(btn);
+    return card;
+  }
+
+  function renderQuestion(id, def) {
+    var card = el('div', { class: 'card' });
+    card.appendChild(el('h2', { class: 'stage-title', text: def.title }));
+    if (def.sub) card.appendChild(el('p', { class: 'stage-sub', text: def.sub }));
+
+    if (def.type === 'single' || def.type === 'multi') {
+      var isMulti = def.type === 'multi';
+      var opts = el('div', { class: 'options' });
+      def.options.forEach(function (o) {
+        var selected = isMulti
+          ? (answers[def.key] || []).indexOf(o.value) !== -1
+          : answers[def.key] === o.value;
+        var indicator = el('div', { class: 'indicator' });
+        var textWrap = el('div', { class: 'option-text' }, [
+          el('div', { class: 'option-label', text: o.label }),
+          o.sub ? el('div', { class: 'option-sub', text: o.sub }) : null
+        ]);
+        var opt = el('div', {
+          class: 'option ' + (isMulti ? 'check' : 'radio') + (selected ? ' selected' : ''),
+          role: 'button', tabindex: '0'
+        }, [indicator, textWrap]);
+        opt.addEventListener('click', function () {
+          if (isMulti) {
+            var arr = answers[def.key] ? answers[def.key].slice() : [];
+            var i = arr.indexOf(o.value);
+            if (i === -1) arr.push(o.value); else arr.splice(i, 1);
+            answers[def.key] = arr;
+          } else {
+            answers[def.key] = o.value;
+          }
+          clearError(id);
+          render();
+          if (!isMulti) {
+            setTimeout(goNext, 140);
+          }
+        });
+        opts.appendChild(opt);
+      });
+      card.appendChild(opts);
+      if (def.type === 'multi') {
+        var err = el('div', { class: 'inline-error', id: 'err-' + id, text: 'Pick at least one, or Continue if none apply.' });
+        card.appendChild(err);
+      }
+      if (isMulti) card.appendChild(navRow(id, true));
+    }
+
+    if (def.type === 'text') {
+      var field = el('div', { class: 'field' });
+      field.appendChild(el('label', { for: id, text: def.title, class: 'sr-only' }));
+      var input = def.multiline ? el('textarea', { id: id, rows: '4', placeholder: def.placeholder || '' })
+                                 : el('input', { id: id, type: def.inputType || 'text', placeholder: def.placeholder || '' });
+      input.value = answers[def.key] || '';
+      input.addEventListener('input', function () {
+        answers[def.key] = input.value;
+        clearError(id);
+      });
+      field.appendChild(input);
+      var errT = el('div', { class: 'field-error', id: 'err-' + id, text: 'This one\'s needed to send the request.' });
+      field.appendChild(errT);
+      card.appendChild(field);
+      card.appendChild(navRow(id, true));
+    }
+
+    if (def.type === 'photos') {
+      var upload = el('div', { class: 'photo-upload' });
+      var icon = el('div', { html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' });
+      var fileInput = el('input', { type: 'file', accept: 'image/*', multiple: 'multiple' });
+      var utext = el('div', { class: 'u-text', text: photoFiles.length ? (photoFiles.length + (photoFiles.length === 1 ? ' photo added' : ' photos added')) : 'Tap to choose photos' });
+      upload.appendChild(icon);
+      upload.appendChild(utext);
+      upload.appendChild(fileInput);
+      card.appendChild(upload);
+
+      var thumbs = el('div', { class: 'thumbs' });
+      photoFiles.forEach(function (f) {
+        var img = el('img', { src: URL.createObjectURL(f) });
+        thumbs.appendChild(img);
+      });
+      card.appendChild(thumbs);
+
+      fileInput.addEventListener('change', function () {
+        photoFiles = photoFiles.concat(Array.from(fileInput.files || []));
+        render();
+      });
+
+      card.appendChild(navRow(id, true));
+    }
+
+    if (def.type === 'single') {
+      var errS = el('div', { class: 'inline-error', id: 'err-' + id, text: 'Pick an option to continue.' });
+      card.appendChild(errS);
+      var backRow = el('div', { class: 'nav-row' });
+      var backOnly = el('button', { class: 'btn-ghost', text: 'Back' });
+      backOnly.addEventListener('click', goBack);
+      backRow.appendChild(backOnly);
+      card.appendChild(backRow);
+    }
+
+    return card;
+  }
+
+  function navRow(id, showBoth) {
+    var row = el('div', { class: 'nav-row' });
+    if (currentIndex > -1) {
+      var back = el('button', { class: 'btn-ghost', text: 'Back' });
+      back.addEventListener('click', goBack);
+      row.appendChild(back);
+    }
+    var next = el('button', { class: 'btn-primary', text: 'Continue' });
+    next.addEventListener('click', goNext);
+    row.appendChild(next);
+    return row;
+  }
+
+  function clearError(id) {
+    var e = document.getElementById('err-' + id);
+    if (e) e.classList.remove('show');
+  }
+
+  function renderSafety() {
+    var wrap = el('div', {});
+    var card = el('div', { class: 'safety-card' });
+    card.appendChild(el('h2', { text: 'Please call rather than wait for a quote' }));
+    card.appendChild(el('p', { text: "Burning smells, sparking, or scorch marks can mean an active electrical hazard. If you smell burning or see sparks right now, switch off the affected circuit at the switchboard if it's safe to do so, and call straight away." }));
+
+    var callBtn = el('a', {
+      class: 'call-btn', href: 'tel:+61413432850',
+      html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Josh now &middot; <span class="call-number">0413 432 850</span>'
+    });
+    card.appendChild(callBtn);
+
+    var copyRow = el('div', { class: 'copy-row' });
+    var copyBtn = el('button', { text: "Number not dialling? Copy it instead" });
+    var copyTag = el('span', { class: 'copied-tag' });
+    copyBtn.addEventListener('click', function () {
+      var text = '0413 432 850';
+      function done() { copyTag.textContent = 'Copied'; setTimeout(function () { copyTag.textContent = ''; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+      } else {
+        fallbackCopy(text, done);
+      }
+    });
+    copyRow.appendChild(copyBtn);
+    copyRow.appendChild(copyTag);
+    card.appendChild(copyRow);
+
+    var row = el('div', { class: 'nav-row' });
+    var back = el('button', { class: 'btn-ghost', text: 'Back' });
+    back.addEventListener('click', goBack);
+    var cont = el('button', { class: 'btn-primary', text: 'Continue with quote request' });
+    cont.addEventListener('click', goNext);
+    row.appendChild(back);
+    row.appendChild(cont);
+    card.appendChild(row);
+    wrap.appendChild(card);
+    return wrap;
+  }
+
+  function summaryPairs() {
+    var order = getStepOrder(answers).filter(function (id) { return STEP_DEFS[id].type !== 'safety'; });
+    var pairs = [];
+    order.forEach(function (id) {
+      var def = STEP_DEFS[id];
+      var val = answers[def.key];
+      var display = '';
+      if (def.type === 'single') display = (LABEL_LOOKUP[id] && LABEL_LOOKUP[id][val]) || '—';
+      else if (def.type === 'multi') {
+        display = (val && val.length) ? val.map(function (v) { return LABEL_LOOKUP[id][v]; }).join(', ') : 'None selected';
+      } else if (def.type === 'text') display = val || '—';
+      else if (def.type === 'photos') display = photoFiles.length ? (photoFiles.length + ' attached') : 'None attached';
+      pairs.push({ label: def.title, value: display });
+    });
+    return pairs;
+  }
+
+  function submitToNetlify() {
+    var fd = new FormData();
+    fd.append('form-name', 'quote-request');
+    fd.append('Name', answers.contactName || '');
+    fd.append('Phone', answers.contactPhone || '');
+    fd.append('Address', answers.contactAddress || '');
+    fd.append('Job type', (LABEL_LOOKUP.jobType && LABEL_LOOKUP.jobType[answers.jobType]) || 'Other');
+    var detailLines = summaryPairs().map(function (p) { return p.label + ': ' + p.value; });
+    fd.append('Details', '[Submitted via the guided Quote Builder]\n\n' + detailLines.join('\n'));
+    photoFiles.forEach(function (f) { fd.append('Photos', f, f.name); });
+    return fetch(window.location.pathname || '/', { method: 'POST', body: fd }).then(function (res) {
+      if (!res.ok) throw new Error('The server said something went wrong (' + res.status + ').');
+    }).catch(function (err) {
+      if (err instanceof Error && /server said/.test(err.message)) throw err;
+      throw new Error("Couldn't reach the server — check your connection and try again.");
+    });
+  }
+
+  function renderSummary() {
+    var card = el('div', { class: 'card' });
+    card.appendChild(el('h2', { class: 'stage-title', text: 'Review your request' }));
+    card.appendChild(el('p', { class: 'stage-sub', text: "Here's everything that'll go to Josh." }));
+
+    var list = el('div', { class: 'summary-list' });
+    summaryPairs().forEach(function (p) {
+      list.appendChild(el('div', { class: 'summary-row' }, [
+        el('div', { class: 's-label', text: p.label }),
+        el('div', { class: 's-value', text: p.value })
+      ]));
+    });
+    card.appendChild(list);
+
+    if (submitState === 'error') {
+      card.appendChild(el('div', {
+        class: 'inline-error show',
+        text: (submitErrorMsg || "Couldn't send that.") + ' Or call Josh directly on 0413 432 850.'
+      }));
+    }
+
+    var row = el('div', { class: 'nav-row' });
+    var back = el('button', { class: 'btn-ghost', text: 'Back' });
+    back.addEventListener('click', goBack);
+    var copy = el('button', { class: 'btn-ghost', text: 'Copy summary' });
+    var tag = el('span', { class: 'copied-tag' });
+    copy.addEventListener('click', function () {
+      var text = summaryPairs().map(function (p) { return p.label + ': ' + p.value; }).join('\n');
+      function done() { tag.textContent = 'Copied'; setTimeout(function () { tag.textContent = ''; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+      } else {
+        fallbackCopy(text, done);
+      }
+    });
+    var submitting = submitState === 'submitting';
+    var submit = el('button', { class: 'btn-primary', text: submitting ? 'Sending…' : 'Submit request' });
+    if (submitting) submit.disabled = true;
+    submit.addEventListener('click', function () {
+      if (submitState === 'submitting') return;
+      submitState = 'submitting';
+      render();
+      submitToNetlify().then(function () {
+        submitState = 'success';
+        render();
+      }).catch(function (err) {
+        submitState = 'error';
+        submitErrorMsg = (err && err.message) || '';
+        render();
+      });
+    });
+    row.appendChild(back);
+    row.appendChild(copy);
+    row.appendChild(submit);
+    card.appendChild(row);
+    card.appendChild(tag);
+    return card;
+  }
+
+  function fallbackCopy(text, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) { /* clipboard unavailable */ }
+  }
+
+  function renderConfirm() {
+    var card = el('div', { class: 'card confirm' });
+    card.appendChild(el('div', { class: 'check-badge', text: '✓' }));
+    card.appendChild(el('h2', { class: 'stage-title', text: 'Request sent' }));
+    card.appendChild(el('p', { text: "That's landed with Josh the same way the quote form does — expect a reply within 24 hours. For anything urgent, call 0413 432 850 directly." }));
+    var again = el('button', { class: 'btn-ghost btn-full', text: 'Submit another' });
+    again.style.marginTop = '20px';
+    again.addEventListener('click', function () {
+      answers = {}; photoFiles = []; submitState = 'idle'; submitErrorMsg = ''; currentIndex = -1; render();
+    });
+    card.appendChild(again);
+    return card;
+  }
+
+  // patch render to branch the summary step on submit state
+  var baseRender = render;
+  render = function () {
+    updateProgress();
+    stage.innerHTML = '';
+    var order = getStepOrder(answers);
+    if (currentIndex === -1) { stage.appendChild(renderIntro()); return; }
+    if (currentIndex >= order.length) {
+      stage.appendChild(submitState === 'success' ? renderConfirm() : renderSummary());
+      return;
+    }
+    var id = order[currentIndex];
+    var def = STEP_DEFS[id];
+    if (def.type === 'safety') stage.appendChild(renderSafety(id));
+    else stage.appendChild(renderQuestion(id, def));
+  };
+
+  render();
+})();
+</script>
+
+</body>
+</html>
