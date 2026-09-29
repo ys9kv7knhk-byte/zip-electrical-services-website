@@ -1,0 +1,8 @@
+# Clean URLs for the service pages
+/switchboard-upgrades        /switchboard-upgrades.html        200
+/ev-charger-installation     /ev-charger-installation.html     200
+/lighting-upgrades           /lighting-upgrades.html           200
+
+# Old standalone quote page now lives on the homepage
+/quote-builder.html          /#quote                           301!
+/quote-builder               /#quote                           301!
